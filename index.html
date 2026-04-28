@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coupons App</title>
+
+<meta name="theme-color" content="#6C63FF">
+
+<style>
+:root{
+  --primary:#6C63FF;
+  --green:#00C853;
+  --bg:#f5f6fa;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto;
+}
+
+body{
+  background:var(--bg);
+}
+
+/* Header */
+.header{
+  background:linear-gradient(135deg,#6C63FF,#8E7CFF);
+  padding:20px;
+  color:#fff;
+  position:sticky;
+  top:0;
+}
+
+.search input{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:12px;
+  margin-top:10px;
+}
+
+/* Container */
+.container{
+  padding:15px;
+  padding-bottom:90px;
+}
+
+/* Card */
+.card{
+  background:#fff;
+  border-radius:16px;
+  padding:15px;
+  margin-bottom:12px;
+  box-shadow:0 5px 12px rgba(0,0,0,0.05);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  cursor:pointer;
+}
+
+.left{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.logo{
+  width:45px;
+  height:45px;
+  border-radius:10px;
+  background:#eee;
+}
+
+.brand{
+  font-weight:600;
+}
+
+.code{
+  color:var(--primary);
+  font-size:14px;
+}
+
+/* Actions */
+.actions{
+  display:flex;
+  gap:8px;
+}
+
+button{
+  border:none;
+  padding:8px 10px;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+.copy{
+  background:var(--primary);
+  color:#fff;
+}
+
+.save{
+  background:#eee;
+}
+
+/* Bottom Nav */
+.nav{
+  position:fixed;
+  bottom:0;
+  width:100%;
+  display:flex;
+  background:#fff;
+  border-top:1px solid #ddd;
+}
+
+.nav button{
+  flex:1;
+  padding:12px;
+  background:none;
+}
+
+/* Toast */
+.toast{
+  position:fixed;
+  bottom:80px;
+  left:50%;
+  transform:translateX(-50%);
+  background:var(--green);
+  color:#fff;
+  padding:10px 20px;
+  border-radius:20px;
+  opacity:0;
+  transition:.3s;
+}
+
+.toast.show{
+  opacity:1;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+  <h2>🔥 Coupons</h2>
+  <div class="search">
+    <input id="search" placeholder="Search coupons...">
+  </div>
+</div>
+
+<div class="container" id="list"></div>
+
+<div class="nav">
+  <button onclick="showAll()">All</button>
+  <button onclick="showSaved()">Saved</button>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const coupons = [
+{brand:"Izil Beauty", code:"IZIL20", link:"https://izilbeauty.com"},
+{brand:"Reef Perfume", code:"REEF15", link:"https://reefperfumes.com"},
+{brand:"Metro Brazil", code:"METRO10", link:"https://metrobrazil.com"},
+{brand:"Nayomi", code:"NAYOMI25", link:"https://nayomi.com"},
+{brand:"Al Ayyari", code:"AYYARI30", link:"#"}
+];
+
+let saved = JSON.parse(localStorage.getItem("savedCoupons")) || [];
+
+function render(data){
+  const list = document.getElementById("list");
+  list.innerHTML="";
+
+  data.forEach(c=>{
+    const div=document.createElement("div");
+    div.className="card";
+
+    div.innerHTML=`
+      <div class="left">
+        <div class="logo"></div>
+        <div>
+          <div class="brand">${c.brand}</div>
+          <div class="code">${c.code}</div>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="copy">Copy</button>
+        <button class="save">Save</button>
+      </div>
+    `;
+
+    div.onclick=()=>window.open(c.link,"_blank");
+
+    div.querySelector(".copy").onclick=(e)=>{
+      e.stopPropagation();
+      navigator.clipboard.writeText(c.code);
+      toast("Copied!");
+    };
+
+    div.querySelector(".save").onclick=(e)=>{
+      e.stopPropagation();
+      if(!saved.find(s=>s.code===c.code)){
+        saved.push(c);
+        localStorage.setItem("savedCoupons",JSON.stringify(saved));
+        toast("Saved!");
+      }
+    };
+
+    list.appendChild(div);
+  });
+}
+
+document.getElementById("search").oninput=(e)=>{
+  const v=e.target.value.toLowerCase();
+  render(coupons.filter(c=>
+    c.brand.toLowerCase().includes(v) ||
+    c.code.toLowerCase().includes(v)
+  ));
+};
+
+function showAll(){render(coupons);}
+function showSaved(){render(saved);}
+
+function toast(msg){
+  const t=document.getElementById("toast");
+  t.innerText=msg;
+  t.classList.add("show");
+  setTimeout(()=>t.classList.remove("show"),2000);
+}
+
+render(coupons);
+</script>
+
+</body>
+</html>
