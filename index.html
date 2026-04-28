@@ -136,37 +136,35 @@ button{
 
 const storeData = {
 
-  "Namshi": {site:"https://en-ae.namshi.com", logo:"https://logo.clearbit.com/namshi.com"},
-  "NOON": {site:"https://www.noon.com", logo:"https://logo.clearbit.com/noon.com"},
-  "Styli": {site:"https://www.styli.com", logo:"https://logo.clearbit.com/styli.com"},
-  "Max Fashion": {site:"https://www.maxfashion.com", logo:"https://logo.clearbit.com/maxfashion.com"},
-  "Mumzworld": {site:"https://www.mumzworld.com", logo:"https://logo.clearbit.com/mumzworld.com"},
-  "Bloomingdale's": {site:"https://www.bloomingdales.ae", logo:"https://logo.clearbit.com/bloomingdales.ae"},
-  "Eyewa": {site:"https://www.eyewa.com", logo:"https://logo.clearbit.com/eyewa.com"},
-  "Golden Scent": {site:"https://www.goldenscent.com", logo:"https://logo.clearbit.com/goldenscent.com"},
+  "Namshi": {site:"https://en-ae.namshi.com", logo:"https://logo.clearbit.com/www.namshi.com"},
+  "NOON": {site:"https://www.noon.com", logo:"https://logo.clearbit.com/www.noon.com"},
+  "Styli": {site:"https://www.styli.com", logo:"https://logo.clearbit.com/www.styli.com"},
+  "Max Fashion": {site:"https://www.maxfashion.com", logo:"https://logo.clearbit.com/www.maxfashion.com"},
+  "Mumzworld": {site:"https://www.mumzworld.com", logo:"https://logo.clearbit.com/www.mumzworld.com"},
+  "Bloomingdale's": {site:"https://www.bloomingdales.ae", logo:"https://logo.clearbit.com/www.bloomingdales.ae"},
+  "Eyewa": {site:"https://www.eyewa.com", logo:"https://logo.clearbit.com/www.eyewa.com"},
+  "Golden Scent": {site:"https://www.goldenscent.com", logo:"https://logo.clearbit.com/www.goldenscent.com"},
 
-  "Vogacloset": {site:"https://vogacloset.com", logo:"https://logo.clearbit.com/vogacloset.com"},
-  "Mamas & Papas": {site:"https://www.mamasandpapas.com", logo:"https://logo.clearbit.com/mamasandpapas.com"},
-  "Metro Brazil": {site:"https://www.metrobrazil.com", logo:"https://logo.clearbit.com/metrobrazil.com"},
-  "FirstCry": {site:"https://www.firstcry.com", logo:"https://logo.clearbit.com/firstcry.com"},
-  "Izil Beauty": {site:"https://www.izilbeauty.com", logo:"https://logo.clearbit.com/izilbeauty.com"},
-  "Nayomi": {site:"https://www.nayomi.com", logo:"https://logo.clearbit.com/nayomi.com"},
-  "Trendyol": {site:"https://www.trendyol.com", logo:"https://logo.clearbit.com/trendyol.com"},
-  "Reef Perfume": {site:"https://reefperfumes.com", logo:"https://logo.clearbit.com/reefperfumes.com"},
-  "Sandro": {site:"https://www.sandro-paris.com", logo:"https://logo.clearbit.com/sandro-paris.com"},
-  "6thStreet": {site:"https://www.6thstreet.com", logo:"https://logo.clearbit.com/6thstreet.com"},
-  "Riva": {site:"https://rivafashion.com", logo:"https://logo.clearbit.com/rivafashion.com"},
-  "Level Shoes": {site:"https://www.levelshoes.com", logo:"https://logo.clearbit.com/levelshoes.com"},
-  "Nice One": {site:"https://niceonesa.com", logo:"https://logo.clearbit.com/niceonesa.com"},
+  "Vogacloset": {site:"https://vogacloset.com", logo:"https://logo.clearbit.com/www.vogacloset.com"},
+  "Mamas & Papas": {site:"https://www.mamasandpapas.com", logo:"https://logo.clearbit.com/www.mamasandpapas.com"},
+  "Metro Brazil": {site:"https://www.metrobrazil.com", logo:"https://logo.clearbit.com/www.metrobrazil.com"},
+  "FirstCry": {site:"https://www.firstcry.com", logo:"https://logo.clearbit.com/www.firstcry.com"},
+  "Izil Beauty": {site:"https://www.izilbeauty.com", logo:"https://logo.clearbit.com/www.izilbeauty.com"},
+  "Nayomi": {site:"https://www.nayomi.com", logo:"https://logo.clearbit.com/www.nayomi.com"},
+  "Trendyol": {site:"https://www.trendyol.com", logo:"https://logo.clearbit.com/www.trendyol.com"},
+  "Reef Perfume": {site:"https://reefperfumes.com", logo:"https://logo.clearbit.com/www.reefperfumes.com"},
+  "Sandro": {site:"https://www.sandro-paris.com", logo:"https://logo.clearbit.com/www.sandro-paris.com"},
+  "6thStreet": {site:"https://www.6thstreet.com", logo:"https://logo.clearbit.com/www.6thstreet.com"},
+  "Riva": {site:"https://rivafashion.com", logo:"https://logo.clearbit.com/www.rivafashion.com"},
+  "Level Shoes": {site:"https://www.levelshoes.com", logo:"https://logo.clearbit.com/www.levelshoes.com"},
+  "Nice One": {site:"https://niceonesa.com", logo:"https://logo.clearbit.com/www.niceonesa.com"},
 
-  // هذا الوحيد ممكن ما يطلع له لوقو
   "مفارش العييري": {
     site:"#",
-    logo:"https://dummyimage.com/80x80/000/fff&text=A"
+    logo:"https://dummyimage.com/80x80/ccc/000&text=ع"
   }
 
 };
-  
   
 
   
@@ -213,7 +211,12 @@ function render(data){
 
     div.innerHTML=`
       <div class="left">
-        <img class="logo" src="${info.logo}">
+        <img class="logo" src="${info.logo}" 
+onerror="
+this.style.display='none';
+this.insertAdjacentHTML('afterend',
+'<div style=\\'width:42px;height:42px;border-radius:12px;background:#eee;display:flex;align-items:center;justify-content:center;font-weight:bold;color:#555\\'>${c.brand[0]}</div>');
+">
         <div class="brand">${c.brand}</div>
       </div>
 
